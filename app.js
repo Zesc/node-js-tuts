@@ -1,65 +1,35 @@
 //jshint esversion:6
-var stuff = require('./stuff');
 
-//calling fucntion inside another function
-function callFunction (fun) {
-  fun();
-}
+let express = require('express');
+let bodyParser = require('body-parser');
 
-let funcExpression = function () {
-  console.log("Today Rocks!");
-};
+let app = express();
 
-//callFunction(funcExpression);
+let jsonParser = bodyParser.json();
 
-// console.log(stuff.counter(['c', 'e', 's', 'a', 'r']));
-// console.log(stuff.adder(3, 2));
-// console.log(stuff.adder(stuff.pi, 5));
+let urlencodedParser = bodyParser.urlencoded({extended: false});
 
-// Cusrtom Events
-let events = require('events');
-let util = require('util');
+app.set('view engine', 'ejs');
+app.use('/assets', express.static('assets'));
 
-let myEmitter =  new events.EventEmitter();
 
-myEmitter.on('someEvent', function(message){
-  console.log(message);
+app.get('/', function(req, res){
+  res.render('index');
 });
 
-//myEmitter.emit('someEvent', "the event was emitted");
-
-let Person = function (name) {
-  this.name = name;
-};
-
-util.inherits(Person, events.EventEmitter);
-
-let oscar = new Person('Oscar');
-let cesar = new Person('Cesar');
-let ross = new Person('Ross');
-
-let people = [oscar, cesar, ross];
-
-people.forEach(function(person) {
-  person.on('speak', function(mssg) {
-    console.log(person.name + ' said: ' + mssg);
-  });
+app.get('/contact', (req, res) => {
+  // console.log(req.query);
+  res.render('contact', {qs: req.query});
 });
 
-//oscar.emit('speak', 'wat up dudes!');
-
-//Read and Write Files (fs)
-let fs = require('fs');
-
-//synchronized method
-//let readMe = fs.readFileSync('sample.txt', 'utf8');
-//fs.writeFileSync('writeme.txt', readMe);
-
-//asyncrhonized method
-fs.readFile('sample.txt', 'utf8', function(err, data) {
-  fs.writeFile('writeme.txt', data, (err) => {});
-  // console.log(data);
+app.post('/contact', urlencodedParser, (req, res) => {
+  console.log(req.body);
+  res.render('contact-success', {data: req.body});
 });
 
+app.get('/profile/:name', (req, res) => {
+  var data = {age: 29, job: 'developer', hobbies: ['eating', 'coding', 'sleeping']};
+  res.render('profile', {person: req.params.name, data: data});
+});
 
-//console.log(readMe);
+app.listen(3000);

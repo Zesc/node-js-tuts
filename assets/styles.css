@@ -1,0 +1,51 @@
+body {
+  padding: 130px;
+  font-family: verdana;
+}
+h1 {
+  font-size: 4rem;
+  color: purple;
+  font-weight: bold;
+  text-trandform: uppercase;
+}
+p{
+  font-size: 1.2 rem;
+  color: black;
+}
+
+h1, p {
+  width: 50%;
+  margin: auto auto;
+  text-align: center;
+}
+
+#contact-form {
+  width: 50%;
+
+  margin: 5% auto;
+}
+
+#contact-form label {
+  display: block;
+}
+
+#contact-form input[type=text] {
+  display: block;
+  width: 100%;
+  margin-top: 2%;
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 12px 20px;
+  box-sizing: border-box;
+}
+
+#contact-form input[type=submit] {
+  display: block;
+  width: 100%;
+  margin: 2% auto;
+  padding: 12px 20px;
+  color: #fff;
+  border: none;
+  background-color: #4caf50;
+  border-radius: 4px;
+}
